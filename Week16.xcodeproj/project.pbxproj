@@ -16,6 +16,8 @@
 		67AF103227A3F6EF009F6DED /* Week16Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AF103127A3F6EF009F6DED /* Week16Tests.swift */; };
 		67AF103C27A3F6EF009F6DED /* Week16UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AF103B27A3F6EF009F6DED /* Week16UITests.swift */; };
 		67AF103E27A3F6EF009F6DED /* Week16UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AF103D27A3F6EF009F6DED /* Week16UITestsLaunchTests.swift */; };
+		67AF104C27A3F752009F6DED /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 67AF104B27A3F752009F6DED /* TinyConstraints */; };
+		67AF104F27A3F75C009F6DED /* MobilliumBuilders in Frameworks */ = {isa = PBXBuildFile; productRef = 67AF104E27A3F75C009F6DED /* MobilliumBuilders */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67AF104C27A3F752009F6DED /* TinyConstraints in Frameworks */,
+				67AF104F27A3F75C009F6DED /* MobilliumBuilders in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +147,10 @@
 			dependencies = (
 			);
 			name = Week16;
+			packageProductDependencies = (
+				67AF104B27A3F752009F6DED /* TinyConstraints */,
+				67AF104E27A3F75C009F6DED /* MobilliumBuilders */,
+			);
 			productName = Week16;
 			productReference = 67AF101727A3F6EE009F6DED /* Week16.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +223,10 @@
 				Base,
 			);
 			mainGroup = 67AF100E27A3F6EE009F6DED;
+			packageReferences = (
+				67AF104A27A3F752009F6DED /* XCRemoteSwiftPackageReference "TinyConstraints" */,
+				67AF104D27A3F75C009F6DED /* XCRemoteSwiftPackageReference "MobilliumBuilders" */,
+			);
 			productRefGroup = 67AF101827A3F6EE009F6DED /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -624,6 +636,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		67AF104A27A3F752009F6DED /* XCRemoteSwiftPackageReference "TinyConstraints" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/roberthein/TinyConstraints.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		67AF104D27A3F75C009F6DED /* XCRemoteSwiftPackageReference "MobilliumBuilders" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mobillium/MobilliumBuilders.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		67AF104B27A3F752009F6DED /* TinyConstraints */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 67AF104A27A3F752009F6DED /* XCRemoteSwiftPackageReference "TinyConstraints" */;
+			productName = TinyConstraints;
+		};
+		67AF104E27A3F75C009F6DED /* MobilliumBuilders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 67AF104D27A3F75C009F6DED /* XCRemoteSwiftPackageReference "MobilliumBuilders" */;
+			productName = MobilliumBuilders;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 67AF100F27A3F6EE009F6DED /* Project object */;
 }

@@ -18,6 +18,8 @@
 		67AF103E27A3F6EF009F6DED /* Week16UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AF103D27A3F6EF009F6DED /* Week16UITestsLaunchTests.swift */; };
 		67AF104C27A3F752009F6DED /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 67AF104B27A3F752009F6DED /* TinyConstraints */; };
 		67AF104F27A3F75C009F6DED /* MobilliumBuilders in Frameworks */ = {isa = PBXBuildFile; productRef = 67AF104E27A3F75C009F6DED /* MobilliumBuilders */; };
+		67AF105127A3FB4E009F6DED /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AF105027A3FB4E009F6DED /* NoteListViewController.swift */; };
+		67AF105427A404F5009F6DED /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AF105327A404F5009F6DED /* AddNoteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		67AF103727A3F6EF009F6DED /* Week16UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Week16UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		67AF103B27A3F6EF009F6DED /* Week16UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week16UITests.swift; sourceTree = "<group>"; };
 		67AF103D27A3F6EF009F6DED /* Week16UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week16UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		67AF105027A3FB4E009F6DED /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
+		67AF105327A404F5009F6DED /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,8 @@
 				67AF102327A3F6EF009F6DED /* Assets.xcassets */,
 				67AF102527A3F6EF009F6DED /* LaunchScreen.storyboard */,
 				67AF102827A3F6EF009F6DED /* Info.plist */,
+				67AF105027A3FB4E009F6DED /* NoteListViewController.swift */,
+				67AF105327A404F5009F6DED /* AddNoteViewController.swift */,
 			);
 			path = Week16;
 			sourceTree = "<group>";
@@ -138,6 +144,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 67AF104127A3F6EF009F6DED /* Build configuration list for PBXNativeTarget "Week16" */;
 			buildPhases = (
+				67AF105227A3FF44009F6DED /* Run SwiftLint */,
 				67AF101327A3F6EE009F6DED /* Sources */,
 				67AF101427A3F6EE009F6DED /* Frameworks */,
 				67AF101527A3F6EE009F6DED /* Resources */,
@@ -265,13 +272,36 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		67AF105227A3FF44009F6DED /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint; then\n    swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		67AF101327A3F6EE009F6DED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67AF105127A3FB4E009F6DED /* NoteListViewController.swift in Sources */,
 				67AF101F27A3F6EE009F6DED /* ViewController.swift in Sources */,
 				67AF101B27A3F6EE009F6DED /* AppDelegate.swift in Sources */,
+				67AF105427A404F5009F6DED /* AddNoteViewController.swift in Sources */,
 				67AF101D27A3F6EE009F6DED /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

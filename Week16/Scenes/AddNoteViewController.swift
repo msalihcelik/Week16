@@ -9,17 +9,27 @@ import UIKit
 import MobilliumBuilders
 import TinyConstraints
 
+protocol AddNoteViewControllerDelegate: AnyObject {
+    func addNoteViewControllerWillPop(title: String, note: String, isEditMode: Bool)
+}
+
 class AddNoteViewController: UIViewController {
+    
+    weak var delegate: AddNoteViewControllerDelegate?
+    
+    var isEditMode = false
+    var noteList = [NoteModel]()
+    var selectedIndex = 0
     
     private let noteStackView = UIStackViewBuilder()
         .axis(.vertical)
         .spacing(10)
         .build()
-    private let titleTextField = UITextFieldBuilder()
+    var titleTextField = UITextFieldBuilder()
         .placeholder("Title")
         .borderWidth(1)
         .build()
-    private let noteTextField = UITextFieldBuilder()
+    var noteTextField = UITextFieldBuilder()
         .placeholder("Note")
         .borderWidth(1)
         .build()
@@ -29,7 +39,7 @@ class AddNoteViewController: UIViewController {
         .borderWidth(2)
         .cornerRadius(5)
         .button
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureContents()
@@ -37,9 +47,12 @@ class AddNoteViewController: UIViewController {
     }
     
     private func configureContents() {
-        self.title = "qqqq"
+        self.title = "Ekle / Düzenle"
         view.backgroundColor = .white
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        guard isEditMode else { return }
+        titleTextField.text = noteList[selectedIndex].title
+        noteTextField.text = noteList[selectedIndex].note
     }
 }
 
@@ -65,6 +78,19 @@ extension AddNoteViewController {
     
     @objc
     func saveButtonTapped() {
-        self.dismiss(animated: true, completion: nil)
+        guard let title = titleTextField.text, !title.isEmpty,
+              let note = noteTextField.text, !note.isEmpty else {
+                  return AlertViewGenerate.shared
+                      .setViewController(self)
+                      .setTitle(AlertIdentifier.error)
+                      .setMessage(AlertIdentifier.missingData)
+                      .generate()
+              }
+        if isEditMode {
+            delegate?.addNoteViewControllerWillPop(title: title, note: note, isEditMode: true)
+        } else {
+            delegate?.addNoteViewControllerWillPop(title: title, note: note, isEditMode: false)
+        }
+        self.navigationController?.pop(options: .transitionCurlDown)
     }
 }

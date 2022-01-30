@@ -4,6 +4,7 @@
 //
 //  Created by Mehmet Salih ÇELİK on 28.01.2022.
 //
+// swiftlint:disable all
 
 import XCTest
 

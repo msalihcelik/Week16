@@ -27,6 +27,7 @@ class NoteListViewController: UIViewController {
     }
     
     private func configureContents() {
+        self.title = "Not Listesi"
         view.backgroundColor = .white
         addNoteButton.addTarget(self, action: #selector(addNoteButtonTapped), for: .touchUpInside)
     }

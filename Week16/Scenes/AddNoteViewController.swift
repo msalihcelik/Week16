@@ -37,6 +37,7 @@ class AddNoteViewController: UIViewController {
     }
     
     private func configureContents() {
+        self.title = "qqqq"
         view.backgroundColor = .white
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }

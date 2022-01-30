@@ -4,14 +4,20 @@
 //
 //  Created by Mehmet Salih ÇELİK on 28.01.2022.
 //
-
+// swiftlint:disable all
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = UINavigationController(rootViewController: NoteListViewController())
+        window.makeKeyAndVisible()
+        self.window = window
         return true
     }
 

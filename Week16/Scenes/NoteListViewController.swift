@@ -12,7 +12,7 @@ import TinyConstraints
 class NoteListViewController: UIViewController {
     
     private var selectedIndex = 0
-    private var noteList = [NoteModel]()
+    private var noteListViewModel = NoteListViewModel()
     private let noteTableView = UITableViewBuilder().build()
     private let addNoteButton = UIButtonBuilder()
         .title("NOT EKLE")
@@ -29,11 +29,11 @@ class NoteListViewController: UIViewController {
     }
     
     private func configureContents() {
-        self.title = "Not Listesi"
+        self.title = TitleIdentifier.NoteListViewController
         view.backgroundColor = .white
-        noteTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: "noteCell")
+        noteTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: CellIdentifier.noteCell)
         addNoteButton.addTarget(self, action: #selector(addNoteButtonTapped), for: .touchUpInside)
-        noteList.append(NoteModel(title: "qqq", note: "www"))
+        noteListViewModel.addNote(title: "Test", note: "Test")
     }
 }
 
@@ -67,12 +67,11 @@ extension NoteListViewController {
 extension NoteListViewController: AddNoteViewControllerDelegate {
     
     func addNoteViewControllerWillPop(title: String, note: String, isEditMode: Bool) {
-        let model = NoteModel(title: title, note: note)
         if isEditMode {
-                    self.noteList[selectedIndex] = model
-                } else {
-                    self.noteList.insert(model, at: 0)
-                }
+            self.noteListViewModel.editNote(title: title, note: note, index: selectedIndex)
+        } else {
+            self.noteListViewModel.addNote(title: title, note: note)
+        }
         self.noteTableView.reloadData()
     }
 }
@@ -80,19 +79,27 @@ extension NoteListViewController: AddNoteViewControllerDelegate {
 // MARK: - UITableViewDataSource methods
 extension NoteListViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let editButton = UITableViewRowAction(style: .normal, title: "Edit") { [weak self] _, _ in
             guard let self = self else { return }
             let addNoteViewController = AddNoteViewController()
             addNoteViewController.delegate = self
             addNoteViewController.isEditMode = true
-            addNoteViewController.noteList = self.noteList
+            addNoteViewController.addNoteViewModel.setNoteList(list: self.noteListViewModel.getNoteList())
             addNoteViewController.selectedIndex = indexPath.row
             self.navigationController?.pushViewController(addNoteViewController, animated: true)
         }
         let deleteButton = UITableViewRowAction(style: .default, title: "Delete") { [weak self] _, _ in
             guard let self = self else { return }
-            self.noteList.remove(at: indexPath.row)
+            self.noteListViewModel.removeNote(index: indexPath.row)
             self.noteTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
         }
         editButton.backgroundColor = UIColor.lightGray
@@ -105,12 +112,12 @@ extension NoteListViewController: UITableViewDelegate {
 extension NoteListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        noteList.count
+        noteListViewModel.count()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell", for: indexPath) as? NoteTableViewCell else { return UITableViewCell() }
-        cell.textLabel?.text = noteList[indexPath.row].title
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.noteCell, for: indexPath) as? NoteTableViewCell else { return UITableViewCell() }
+        cell.titleLabel.text = noteListViewModel.getNote(index: indexPath.row).title
         return cell
     }
 }

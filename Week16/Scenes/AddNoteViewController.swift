@@ -18,7 +18,7 @@ class AddNoteViewController: UIViewController {
     weak var delegate: AddNoteViewControllerDelegate?
     
     var isEditMode = false
-    var noteList = [NoteModel]()
+    var addNoteViewModel = AddNoteViewModel()
     var selectedIndex = 0
     
     private let noteStackView = UIStackViewBuilder()
@@ -47,12 +47,12 @@ class AddNoteViewController: UIViewController {
     }
     
     private func configureContents() {
-        self.title = "Ekle / Düzenle"
+        self.title = TitleIdentifier.AddNoteViewController
         view.backgroundColor = .white
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         guard isEditMode else { return }
-        titleTextField.text = noteList[selectedIndex].title
-        noteTextField.text = noteList[selectedIndex].note
+        titleTextField.text = addNoteViewModel.getNote(index: selectedIndex).title
+        noteTextField.text = addNoteViewModel.getNote(index: selectedIndex).note
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TitleIdentifier {
+struct ScreenTitles {
     static let AddNoteViewController = "Ekle / Düzenle"
     static let NoteListViewController = "Not Listesi"
 }

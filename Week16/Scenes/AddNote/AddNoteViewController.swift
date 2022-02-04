@@ -2,24 +2,14 @@
 //  AddNoteViewController.swift
 //  Week16
 //
-//  Created by Mehmet Salih ÇELİK on 28.01.2022.
+//  Created by Mehmet Salih ÇELİK on 1.02.2022.
 //
 
 import UIKit
 import MobilliumBuilders
 import TinyConstraints
 
-protocol AddNoteViewControllerDelegate: AnyObject {
-    func addNoteViewControllerWillPop(title: String, note: String, isEditMode: Bool)
-}
-
-class AddNoteViewController: UIViewController {
-    
-    weak var delegate: AddNoteViewControllerDelegate?
-    
-    var isEditMode = false
-    var addNoteViewModel = AddNoteViewModel()
-    var selectedIndex = 0
+final class AddNoteViewController: BaseViewController<AddNoteViewModel> {
     
     private let noteStackView = UIStackViewBuilder()
         .axis(.vertical)
@@ -44,16 +34,16 @@ class AddNoteViewController: UIViewController {
         super.viewDidLoad()
         configureContents()
         addSubViews()
+        self.titleTextField.text = viewModel.title
+        self.noteTextField.text = viewModel.note
     }
     
     private func configureContents() {
-        self.title = TitleIdentifier.AddNoteViewController
+        self.title = ScreenTitles.AddNoteViewController
         view.backgroundColor = .white
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        guard isEditMode else { return }
-        titleTextField.text = addNoteViewModel.getNote(index: selectedIndex).title
-        noteTextField.text = addNoteViewModel.getNote(index: selectedIndex).note
     }
+    
 }
 
 // MARK: - SubViews
@@ -61,15 +51,20 @@ extension AddNoteViewController {
     
     private func addSubViews() {
         view.addSubview(noteStackView)
+        noteStackView.axis = .vertical
         noteStackView.addArrangedSubview(titleTextField)
         noteStackView.addArrangedSubview(noteTextField)
         noteStackView.topToSuperview().constant = 300
         noteStackView.edgesToSuperview(excluding: [.bottom, .top], insets: .init(top: 0, left: 100, bottom: 0, right: 100), usingSafeArea: true)
+        titleTextField.setHugging(.required, for: .vertical)
+        noteTextField.setHugging(.defaultLow, for: .vertical)
         
         view.addSubview(saveButton)
         saveButton.width(100)
         saveButton.aspectRatio(1)
-        saveButton.centerInSuperview()
+        saveButton.centerXToSuperview()
+        saveButton.bottomToSuperview(offset: -10, usingSafeArea: true)
+        saveButton.topToBottom(of: noteStackView, offset: 30)
     }
 }
 
@@ -78,19 +73,16 @@ extension AddNoteViewController {
     
     @objc
     func saveButtonTapped() {
-        guard let title = titleTextField.text, !title.isEmpty,
-              let note = noteTextField.text, !note.isEmpty else {
-                  return AlertViewGenerate.shared
-                      .setViewController(self)
-                      .setTitle(AlertIdentifier.error)
-                      .setMessage(AlertIdentifier.missingData)
-                      .generate()
-              }
-        if isEditMode {
-            delegate?.addNoteViewControllerWillPop(title: title, note: note, isEditMode: true)
+        if let title = titleTextField.text, !title.isEmpty,
+           let note = noteTextField.text, !note.isEmpty {
+            let model = NoteModel(title: title, note: note)
+            viewModel.saveNote(note: model)
         } else {
-            delegate?.addNoteViewControllerWillPop(title: title, note: note, isEditMode: false)
+            AlertViewGenerate.shared
+                .setViewController(self)
+                .setTitle(AlertIdentifier.error)
+                .setMessage(AlertIdentifier.missingData)
+                .generate()
         }
-        self.navigationController?.pop(options: .transitionCurlDown)
     }
 }

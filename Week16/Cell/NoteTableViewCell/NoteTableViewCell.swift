@@ -18,6 +18,8 @@ class NoteTableViewCell: UITableViewCell {
         .numberOfLines(0)
         .build()
     
+    weak var viewModel: NoteTableViewCellProtocol?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubViews()
@@ -39,5 +41,11 @@ class NoteTableViewCell: UITableViewCell {
     func addSubViews() {
         addSubview(titleLabel)
         titleLabel.edgesToSuperview(insets: .init(top: 10, left: 20, bottom: 10, right: 20))
+    }
+    
+    func setupCell(with viewModel: NoteTableViewCellProtocol) {
+        self.viewModel = viewModel
+        titleLabel.text = viewModel.title
+        noteLabel.text = viewModel.note
     }
 }

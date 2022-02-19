@@ -28,20 +28,21 @@ final class AddNoteViewController: BaseViewController<AddNoteViewModel> {
         .title("KAYDET")
         .borderWidth(2)
         .cornerRadius(5)
-        .button
+        .build()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureContents()
         addSubViews()
-        self.titleTextField.text = viewModel.title
-        self.noteTextField.text = viewModel.note
     }
     
     private func configureContents() {
-        self.title = ScreenTitles.AddNoteViewController
+        title = ScreenTitles.AddNoteViewController
         view.backgroundColor = .white
+        titleTextField.text = viewModel.title
+        noteTextField.text = viewModel.note
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        noteTextField.contentVerticalAlignment = .top
     }
     
 }
@@ -55,7 +56,7 @@ extension AddNoteViewController {
         noteStackView.addArrangedSubview(titleTextField)
         noteStackView.addArrangedSubview(noteTextField)
         noteStackView.topToSuperview().constant = 300
-        noteStackView.edgesToSuperview(excluding: [.bottom, .top], insets: .init(top: 0, left: 100, bottom: 0, right: 100), usingSafeArea: true)
+        noteStackView.edgesToSuperview(excluding: [.bottom, .top], insets: .left(100) + .right(100))
         titleTextField.setHugging(.required, for: .vertical)
         noteTextField.setHugging(.defaultLow, for: .vertical)
         
@@ -64,7 +65,7 @@ extension AddNoteViewController {
         saveButton.aspectRatio(1)
         saveButton.centerXToSuperview()
         saveButton.bottomToSuperview(offset: -10, usingSafeArea: true)
-        saveButton.topToBottom(of: noteStackView, offset: 30)
+        saveButton.topToBottom(of: noteStackView, offset: 300)
     }
 }
 

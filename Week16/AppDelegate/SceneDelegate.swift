@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
         let window = UIWindow(windowScene: windowScene)
         let router = NoteListRouter()
-        let viewModel = NoteListViewModel(router: router, note: NoteModel(title: "w", note: "e"))
+        let viewModel = NoteListViewModel(router: router, note: NoteModel(title: "Test", note: "Test"))
         let viewController = NoteListViewController(viewModel: viewModel)
         viewController.view.backgroundColor = .white
         let navigationcontroller = UINavigationController(rootViewController: viewController)
